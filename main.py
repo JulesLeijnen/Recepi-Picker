@@ -51,9 +51,12 @@ def init_checks():
             pass
         else:
             #Log fuckup
-            #create files
-            error()
-    #logging all db files there
+            #flag empty lists because of new making
+            for names in DBFileNames:
+                with open("{}\{}".format(DBFilePath, names), 'x') as file: #create file with filename
+                    pass
+                #log creation file
+    #logging all db files there, with flag if needed
     checksOutput.append(DBFilesChecked) #Here the first element wil be a list of all files checked that were needed
 
     return checksOutput
@@ -67,6 +70,7 @@ def SQLiteConnect(Filenames, FilePath):
         RecepieDB = sqlite3.connect(RecepiePath)
         IngredientDB = sqlite3.connect(IngredientsPath)
         print(sqlite3.version)
+        print(type(RecepieDB))
     except Error as e:
         print(e)
     finally:
@@ -75,7 +79,7 @@ def SQLiteConnect(Filenames, FilePath):
             IngredientDB.close()
 
 
-    return
+    return RecepieDB, IngredientDB
 
 #----------------------INITIATE---------------------------------
 
@@ -107,3 +111,4 @@ class Ingredient:
 # JSONString = jsonpickle.encode(temp1)
 # print(JSONString)
 SQLiteConnect(DBFileNames, DBFilePath)
+# init_checks()
